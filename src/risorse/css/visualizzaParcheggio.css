@@ -1,0 +1,86 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom, #1f1f1f, #2e2e2e);
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-text-fill: #e0e0e0;
+}
+
+/* Griglia dei posti */
+.griglia-parcheggio {
+    -fx-hgap: 12;
+    -fx-vgap: 12;
+    -fx-alignment: center;
+    -fx-padding: 10;
+}
+
+.selezione-posto-container, .visualizza-parcheggio-container {
+    -fx-padding: 25;
+    -fx-spacing: 25;
+    -fx-alignment: center;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0.4, 0, 2);
+}
+
+/* Conferma: verde invariato */
+.bottone-visualizza-conferma {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12;
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-pref-width: 300px;
+    -fx-pref-height: 50px;
+    -fx-text-alignment: center;
+}
+
+.bottone-visualizza-conferma:hover {
+    -fx-background-color: #27ae60;
+}
+
+/* Etichette e posti */
+.etichetta-periodo {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-padding: 10;
+    -fx-background-color: #45457a;
+    -fx-border-color: #8fa0ff;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.posto-slot {
+    -fx-background-color: transparent;
+    -fx-cursor: default;
+    -fx-padding: 5;
+    -fx-border-radius: 8;
+    -fx-border-color: transparent;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 3, 0.3, 0, 1);
+    -fx-alignment: center;
+}
+
+.posto-cliccabile {
+    -fx-cursor: hand;
+}
+
+.posto-cliccabile:hover {
+    -fx-border-color: #758cff;
+    -fx-background-color: rgba(117, 140, 255, 0.15);
+}
+
+.posto-selezionato {
+    -fx-border-color: #758cff;
+    -fx-background-color: rgba(117, 140, 255, 0.25);
+    -fx-border-width: 2;
+    -fx-text-fill: white;
+}
+
+.numero-posto {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 2, 0, 0, 1);
+}
+
+

@@ -1,0 +1,79 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom, #121212, #2c2c2c);
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.selezione-orari {
+    -fx-border-color: #758cff;
+    -fx-border-width: 2px;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-spacing: 20px;
+    -fx-padding: 25px;
+}
+
+.titolo-seleziona-orari {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8fa0ff;
+}
+
+.etichetta-orari {
+    -fx-font-size: 17px;
+    -fx-text-fill: #e0e4ff;
+}
+
+.pulsante-grande {
+    -fx-font-size: 16px;
+    -fx-padding: 12px 24px;
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-background-radius: 10px;
+}
+
+.pulsante-grande:hover {
+    -fx-background-color: #2980b9;
+}
+
+.prenotazione-datapicker {
+    -fx-background-color: #393964;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #758cff;
+    -fx-border-width: 1.5px;
+    -fx-font-size: 15px;
+    -fx-padding: 4px 8px;
+    -fx-pref-width: 150px;
+}
+
+/* Time picker */
+.scegliOra-datapicker .text-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 4px 8px;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+}
+
+.scegliOra-datapicker .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 2px;
+    -fx-min-width: 18px;
+    -fx-min-height: 18px;
+}
+
+.scegliOra-datapicker:focused {
+    -fx-border-color: #8fa0ff;
+    -fx-effect: dropshadow(gaussian, #8fa0ff, 6, 0, 0, 0);
+}
+
+/* ComboBox */
+.combo-selezione {
+    -fx-font-size: 14px;
+    -fx-padding: 6px;
+    -fx-background-radius: 8px;
+    -fx-background-color: linear-gradient(to bottom, #2e2e4d, #3a3a5f);
+    -fx-border-color: #8fa0ff;
+    -fx-border-radius: 8px;
+    -fx-text-fill: white;
+}

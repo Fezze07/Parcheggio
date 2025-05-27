@@ -1,0 +1,2 @@
+NomeUtente,Nome,Cognome,Targa,Tipo,Data Arrivo,Orario Arrivo,Data Partenza,Orario Partenza,Costo,x,y
+a,das,dfs,gh678jh,Moto,2025-05-28,14:15,2025-05-28,20:00,48.60,2,1

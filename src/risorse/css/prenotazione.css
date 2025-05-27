@@ -1,0 +1,252 @@
+/* === FILE CSS PER STILE INTERFACCIA PRENOTAZIONE PARCHEGGIO === */
+
+/* ─────────────────── BACKGROUND ─────────────────── */
+.prenotazione-root {
+    -fx-background-color: linear-gradient(to bottom, #1f1f1f, #3a3a3a);
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-padding: 20px;
+    -fx-spacing: 20px;
+}
+
+/* ─────────────────── LABELS ─────────────────── */
+.prenotazione-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #cccccc;
+    -fx-font-weight: bold;
+    -fx-translate-y: 2px;
+    -fx-opacity: 0.85;
+    -fx-padding: 0 0 4px 4px;
+    -fx-transition: all 0.3s ease;
+}
+
+.prenotazione-label:hover {
+    -fx-text-fill: #9b59b6;
+    -fx-opacity: 1;
+    -fx-cursor: default;
+}
+
+.prenotazione-label,
+.prenotazione-label-orario {
+    -fx-font-size: 16px;
+}
+
+.prenotazione-costo-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #00c49a;
+}
+
+.prenotazione-label-orario {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.prenotazione-titolo {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #9b59b6, 6, 0, 0, 0);
+}
+
+/* ─────────────────── INPUT ─────────────────── */
+.prenotazione-input {
+    -fx-background-color: #2c2f33;
+    -fx-text-fill: #f0f0f0;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #7289da;
+    -fx-border-width: 1.5px;
+    -fx-font-size: 14px;
+    -fx-padding: 6px 10px;
+    -fx-transition: border-color 0.3s ease, -fx-effect 0.3s ease;
+}
+
+.prenotazione-input:hover {
+    -fx-border-color: #9b59b6;
+}
+
+/* ─────────────────── COMBO-TIPO ─────────────────── */
+.prenotazione-combotipo {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #f0f0f0;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #7289da;
+    -fx-border-width: 1.5px;
+    -fx-font-size: 13px;
+    -fx-padding: 4px 8px;
+    -fx-pref-width: 150px;
+    -fx-transition: border-color 0.3s ease;
+}
+
+.prenotazione-combotipo:hover {
+    -fx-border-color: #9b59b6;
+}
+
+.prenotazione-combotipo:focused {
+    -fx-border-color: #9b59b6;
+    -fx-effect: dropshadow(gaussian, #9b59b6, 8, 0, 0, 0);
+}
+
+.prenotazione-combotipo .text-field {
+    -fx-text-fill: #f0f0f0;
+    -fx-font-size: 13px;
+}
+
+.prenotazione-combotipo .list-cell {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #f0f0f0;
+}
+
+/* ─────────────────── DATA-PICKER ─────────────────── */
+.prenotazione-datapicker {
+    -fx-background-color: #1a1a1a;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #7289da;
+    -fx-border-width: 1.5px;
+    -fx-font-size: 13px;
+    -fx-padding: 4px 8px;
+    -fx-pref-width: 150px;
+    -fx-transition: border-color 0.3s ease;
+}
+
+.prenotazione-datapicker:hover {
+    -fx-border-color: #9b59b6;
+}
+
+.prenotazione-datapicker .text-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-padding: 4px 8px;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+}
+
+.prenotazione-datapicker .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 2px;
+    -fx-min-width: 18px;
+    -fx-min-height: 18px;
+}
+
+.date-picker-popup {
+    -fx-background-color: #000000;
+    -fx-border-color: #9b59b6;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+.date-picker-popup .month-year-pane {
+    -fx-text-fill: #9b59b6;
+}
+
+.date-picker-popup .calendar {
+    -fx-background-color: #000000;
+}
+
+.date-picker-popup .calendar .day-cell {
+    -fx-text-fill: #f0f0f0;
+    -fx-opacity: 1;
+    -fx-font-weight: normal;
+    -fx-background-color: transparent;
+    -fx-border-radius: 4px;
+    -fx-padding: 4px 6px;
+}
+
+.date-picker-popup .calendar .day-cell:hover {
+    -fx-background-color: #9b59b6;
+    -fx-text-fill: black;
+    -fx-cursor: pointer;
+}
+
+.date-picker-popup .calendar .day-cell:disabled {
+    -fx-background-color: #800000;
+    -fx-text-fill: #888888;
+    -fx-opacity: 1;
+    -fx-font-weight: bold;
+    -fx-cursor: default;
+}
+
+/* ─────────────────── CHECKBOX ─────────────────── */
+.prenotazione-checkbox {
+    -fx-font-size: 14px;
+    -fx-text-fill: #ffffff;
+}
+
+/* ─────────────────── SLIDER ─────────────────── */
+.prenotazione-slider {
+    -fx-padding: 0 10px;
+    -fx-control-inner-background: #2c2f33;
+}
+
+.prenotazione-slider .thumb {
+    -fx-background-color: #9b59b6;
+    -fx-border-radius: 50%;
+    -fx-pref-width: 14px;
+    -fx-pref-height: 14px;
+    -fx-transition: background-color 0.3s ease;
+}
+
+.prenotazione-slider .thumb:hover {
+    -fx-background-color: #6a3d9a;
+}
+
+.prenotazione-slider .track {
+    -fx-background-color: #4f545c;
+    -fx-background-insets: 0;
+    -fx-padding: 2px;
+    -fx-border-radius: 4px;
+}
+
+.prenotazione-slider .axis {
+    -fx-tick-label-fill: white;
+    -fx-font-size: 12px;
+}
+
+.prenotazione-slider .tick-mark {
+    -fx-stroke: white;
+}
+
+/* ─────────────────── BOX-OPZIONI ─────────────────── */
+.box-opzioni-extra {
+    -fx-padding: 10px;
+    -fx-background-color: #2c2f33;
+    -fx-background-radius: 8px;
+    -fx-margin-top: 20px;
+}
+
+/* ─────────────────── FORM-BOX ─────────────────── */
+.form-box {
+    -fx-spacing: 10px;
+    -fx-padding: 10px;
+}
+
+.form-layout {
+    -fx-spacing: 20px;
+    -fx-alignment: center;
+}
+
+/* ─────────────────── PULSANTE-CONTROLLA ─────────────────── */
+.pulsante-controlla {
+    -fx-background-color: #00c49a;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 5px 12px;
+    -fx-margin: 0 5px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.pulsante-controlla:hover {
+    -fx-background-color: #00a87a;
+}
+
+.pulsante-controlla:pressed {
+    -fx-background-color: #5e2e75;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 4, 0, 0, 2);
+}

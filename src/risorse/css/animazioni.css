@@ -1,0 +1,43 @@
+/* POPUP */
+.popupAnimazioni {
+    -fx-background-color: linear-gradient(to bottom, #1f1f1f, #3a3a3a);
+    -fx-padding: 20;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-alignment: center;
+    -fx-spacing: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 12, 0.6, 0, 3);
+}
+
+.popupAnimazioni-text {
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+    -fx-font-weight: normal;
+    -fx-text-alignment: center;
+    -fx-line-spacing: 4px;
+}
+
+.popupAnimazioni-text-evidenziato {
+    -fx-font-weight: bold;
+    -fx-font-size: 30px;
+    -fx-fill: #3ca7d4;
+}
+
+.popupAnimazioni .button {
+    -fx-background-color: linear-gradient(to right, #2e77aa, #6c3b92);
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 6, 0.4, 0, 2);
+}
+
+.popupAnimazioni .button:hover {
+    -fx-background-color: linear-gradient(to right, #3c8fd1, #8749bf);
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+}
+

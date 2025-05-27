@@ -1,0 +1,53 @@
+/* BACKGROUND */
+.root {
+    -fx-background-color: linear-gradient(to bottom, #1f1f1f, #3a3a3a);
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.indietro {
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-background-color: linear-gradient(to right, #4CAF50, #388E3C);
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);
+}
+
+.indietro:hover {
+    -fx-background-color: linear-gradient(to right, #66BB6A, #43A047);
+    -fx-text-fill: white;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.invito {
+    -fx-font-size: 32px;
+    -fx-text-fill: #c5c9ff;
+    -fx-font-weight: bold;
+    -fx-padding: 20px;
+    -fx-text-alignment: center;
+    -fx-background-radius: 15px;
+    -fx-background-color: rgba(40, 40, 80, 0.5);
+}
+
+/* CHI SIAMO */
+.chi-siamo {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-font-size: 25px;
+    -fx-padding: 12px 25px;
+    -fx-background-radius: 15px;
+    -fx-cursor: hand;
+    -fx-transition: 0.3s ease;
+}
+
+.chi-siamo:hover {
+    -fx-background-color: #27ae60;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}

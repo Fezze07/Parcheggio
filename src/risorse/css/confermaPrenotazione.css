@@ -1,0 +1,69 @@
+.finestra-conferma {
+    -fx-background-radius: 12;
+    -fx-padding: 20;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #e0e4ff;
+    -fx-effect: dropshadow(three-pass-box, rgba(80,80,130,0.7), 10, 0, 0, 4);
+}
+
+.titolo-popup {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #c3c6ff;
+    -fx-padding: 0 0 12 0;
+}
+
+.riepilogo-contenuto {
+    -fx-text-fill: #d0d5ff;
+    -fx-font-size: 15px;
+    -fx-padding: 10 0 22 0;
+}
+
+.bottone-popup {
+    -fx-background-color: #5a79ff;
+    -fx-text-fill: white;
+    -fx-padding: 9 18 9 18;
+    -fx-font-size: 15px;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-transition: background-color 0.3s ease;
+}
+
+.bottone-popup:hover {
+    -fx-background-color: #7c95ff;
+}
+
+.combo-selezione {
+    -fx-background-color: #6a4bcf;
+    -fx-text-fill: #e3e6ff;
+}
+
+.combo-selezione:hover {
+    -fx-background-color: #4b3a9f;
+}
+
+.combo-selezione .list-cell {
+    -fx-text-fill: #e3e6ff;
+    -fx-background-color: transparent;
+}
+
+.combo-selezione .list-cell:hover {
+    -fx-background-color: #5a66a6;
+}
+
+.combo-selezione .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-selezione .combo-box-popup .list-view {
+    -fx-background-color: #3f3f75;
+}
+
+.box-cancellazione {
+    -fx-border-radius: 18px;
+    -fx-background-radius: 18px;
+    -fx-padding: 32px;
+    -fx-spacing: 22px;
+    -fx-background-color: rgba(90, 110, 180, 0.25);
+}

@@ -1,0 +1,2 @@
+Tipo,NomeUtente,Password
+Utente,a,a

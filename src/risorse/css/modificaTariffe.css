@@ -1,0 +1,117 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom, #1f1f1f, #3a3a3a);
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.contenitore {
+    -fx-background-color: #3b3f6a;
+    -fx-padding: 20px;
+    -fx-border-radius: 12px;
+    -fx-spacing: 18;
+    -fx-effect: dropshadow(gaussian, rgba(70,80,140,0.7), 8, 0, 0, 3);
+}
+
+.sezione-veicoli, .sezione-opzioni-extra, .sezione-giorni, .sezione-orari {
+    -fx-font-weight: bold;
+    -fx-text-fill: #9aaaff;
+    -fx-background-color: #252a4bcc;
+    -fx-border-radius: 10;
+    -fx-padding: 12;
+    -fx-effect: dropshadow(gaussian, rgba(90,100,180,0.5), 4, 0, 0, 1);
+}
+
+.griglia-sezione {
+    -fx-background-color: #1b1f3a;
+    -fx-padding: 18;
+    -fx-border-radius: 8;
+}
+
+.etichetta-orario {
+    -fx-text-fill: #9aaaff;
+    -fx-font-size: 16px;
+    -fx-translate-y: 2px;
+    -fx-opacity: 0.9;
+    -fx-padding: 0 0 6px 6px;
+    -fx-pref-width: 220px;
+    -fx-font-weight: bold;
+}
+
+.etichetta-selezione {
+    -fx-text-fill: #a1b0ff;
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+}
+
+.campo-selezione, .campo-costo-orario {
+    -fx-background-color: #404a90;
+    -fx-text-fill: #dde1ff;
+    -fx-font-weight: bold;
+    -fx-border-color: #7a8fff;
+    -fx-border-radius: 7;
+    -fx-padding: 8 14 8 14;
+    -fx-pref-width: 140px;
+    -fx-effect: dropshadow(gaussian, rgba(120,140,255,0.6), 5, 0, 0, 1);
+}
+
+.contenitore-orario {
+    -fx-background-color: #2a2e57;
+    -fx-padding: 14;
+    -fx-border-radius: 12;
+    -fx-spacing: 18;
+    -fx-max-width: 620px;
+    -fx-effect: dropshadow(gaussian, rgba(80,90,160,0.5), 6, 0, 0, 2);
+}
+
+.pannello {
+    -fx-text-fill: #9aaaff;
+    -fx-font-size: 16px;
+}
+
+.titled-pane {
+    -fx-background-color: #454a78;
+    -fx-text-fill: #9aaaff;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #7a8fff;
+    -fx-max-width: 620px;
+    -fx-effect: dropshadow(gaussian, rgba(100,110,190,0.5), 5, 0, 0, 2);
+}
+
+.titled-pane > .title {
+    -fx-background-color: #383f69;
+    -fx-text-fill: #a1b0ff;
+    -fx-padding: 12;
+    -fx-background-insets: 0;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.buttone-aggiungi-date {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20 10 20;
+    -fx-background-radius: 7;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(40,100,40,0.6), 4, 0, 0, 2);
+    -fx-transition: all 0.3s ease;
+}
+
+.buttone-aggiungi-date:hover {
+    -fx-background-color: #45a049;
+}
+
+.lista-date {
+    -fx-background-color: #121433;
+    -fx-border-color: #7a8fff;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-padding: 12;
+    -fx-spacing: 8;
+    -fx-max-height: 160px;
+    -fx-overflow-y: auto;
+    -fx-font-size: 15px;
+    -fx-text-fill: #d0d5ff;
+}

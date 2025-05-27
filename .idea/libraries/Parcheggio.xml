@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Parcheggio">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../javafx-sdk-25/lib" />
+      <root url="jar://$PROJECT_DIR$/../mysql-connector-j-9.3.0/mysql-connector-j-9.3.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/../javafx-sdk-25/lib" recursive="false" />
+  </library>
+</component>

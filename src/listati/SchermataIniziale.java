@@ -50,10 +50,10 @@ public class SchermataIniziale {
         menuPulsanti.setAlignment(Pos.CENTER);
         menuPulsanti.setPadding(new Insets(10));
         menuPulsanti.getStyleClass().add("vbox-menu");
-        menuPulsanti.setMinWidth(300);
+        menuPulsanti.setMinWidth(250);
 
         StackPane boxParcheggio = new StackPane();
-        boxParcheggio.setMaxSize(200, 200);
+        boxParcheggio.setMaxSize(150, 150);
         boxParcheggio.getStyleClass().add("stack-parcheggio");
         Timeline timeline = new Timeline(
                 new KeyFrame(javafx.util.Duration.seconds(0), _ -> boxParcheggio.getChildren().setAll(GUI_VisualizzaParcheggio.creaBoxParcheggioLive())),
@@ -74,7 +74,8 @@ public class SchermataIniziale {
         VBox boxContenuti = new VBox(20, boxCentrale);
         boxContenuti.setAlignment(Pos.CENTER);
         boxContenuti.getStyleClass().add("hbox-contenitore");
-        boxContenuti.setMaxSize(1500, 1000);
+        boxContenuti.setMaxWidth(1200);
+        boxContenuti.setMaxHeight(800);
         boxContenuti.getStyleClass().add("vbox-base");
 
         HBox topBar = new HBox();

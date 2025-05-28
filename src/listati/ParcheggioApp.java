@@ -21,7 +21,6 @@ public class ParcheggioApp extends Application {
         InterfacciaHelper.creaStage(primaryStage, scene);
         inizializzaRootPane(base, root);
 
-
         GestioneUtenti.inizializzaConnessione();
         GestioneParcheggio.inizializzaConnessione();
         GestioneParcheggio.caricaPrezzi();

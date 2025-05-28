@@ -30,6 +30,7 @@ public class FunzioniAdmin {
     }
 
     public static void visualizzaPrenotazioniAttive(Utente utente, Connection conn) {
+        eliminaPrenotazioniVecchie(conn);
         List<Posto> prenotazioni = new ArrayList<>();
         String query = "SELECT * FROM prenotazioni WHERE data_partenza >= CURDATE() ORDER BY data_arrivo, ora_arrivo";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -51,7 +52,7 @@ public class FunzioniAdmin {
                     );
                     prenotazioni.add(p);
                 }
-            }
+              }
         } catch (SQLException e) {
             System.err.println("Errore nella connessione al database: " + e.getMessage());
             return;
@@ -122,6 +123,14 @@ public class FunzioniAdmin {
         }
     }
 
+    public static void eliminaPrenotazioniVecchie(Connection conn) {
+        String deleteSQL = "DELETE FROM prenotazioni WHERE (data_partenza < CURDATE()) OR (data_partenza = CURDATE() AND ora_partenza < CURTIME())";
+        try (PreparedStatement stmt = conn.prepareStatement(deleteSQL)) {
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Errore durante eliminazione prenotazioni vecchie: " + e.getMessage());
+        }
+    }
 
     private static void mostraInterfacciaEliminazione(Utente utente, List<Posto> lista, boolean mostraUtente, Connection conn) {
         ComboBox<Posto> scelta = new ComboBox<>();
@@ -176,9 +185,9 @@ public class FunzioniAdmin {
             }
         });
         Button esci = InterfacciaHelper.creaPulsante("Esci", _ -> SchermataIniziale.aggiornaMenu(utente));
-        HBox pulsantiBox = new HBox(conferma, esci);
+        HBox pulsantiBox = new HBox(40, conferma, esci);
         pulsantiBox.setAlignment(Pos.CENTER);
-        VBox layout = new VBox(10, scelta, new HBox(40, pulsantiBox));
+        VBox layout = new VBox(10, scelta, pulsantiBox);
         layout.getStyleClass().add("box-cancellazione");
         layout.setAlignment(Pos.CENTER);
         base.setCenter(layout);
@@ -259,19 +268,19 @@ public class FunzioniAdmin {
         );
         sezioneOpzioni.getStyleClass().add("sezione-opzioni-extra");
         // ====== SEZIONE GIORNI ======
+        Map<String, String> giorniOrdinati = new LinkedHashMap<>();
+        giorniOrdinati.put("MONDAY", "Lunedì");
+        giorniOrdinati.put("TUESDAY", "Martedì");
+        giorniOrdinati.put("WEDNESDAY", "Mercoledì");
+        giorniOrdinati.put("THURSDAY", "Giovedì");
+        giorniOrdinati.put("FRIDAY", "Venerdì");
+        giorniOrdinati.put("SATURDAY", "Sabato");
+        giorniOrdinati.put("SUNDAY", "Domenica");
         TitledPane sezioneGiorni = creaSezione(
                 "Prezzi Giornalieri",
                 g -> Prezzi.getPrezzoGiorno(DayOfWeek.valueOf(g)),
                 (g, p) -> Prezzi.setPrezzoGiorno(DayOfWeek.valueOf(g), p),
-                Map.of(
-                        "MONDAY", "Lunedì",
-                        "TUESDAY", "Martedì",
-                        "WEDNESDAY", "Mercoledì",
-                        "THURSDAY", "Giovedì",
-                        "FRIDAY", "Venerdì",
-                        "SATURDAY", "Sabato",
-                        "SUNDAY", "Domenica"
-                )
+                giorniOrdinati
         );
         sezioneGiorni.getStyleClass().add("sezione-giorni");
         // ====== SEZIONE COSTO ORARIO ======
@@ -288,7 +297,7 @@ public class FunzioniAdmin {
         Button salva = InterfacciaHelper.creaPulsante("Salva Tutto", _ -> {
             try {
                 Prezzi.setCostoOrario(Double.parseDouble(campoOrario.getText()));
-                SalvaCarica.salvaPrezzi();
+                SalvaCarica.esportaPrezzi();
                 InterfacciaHelper.mostraConferma("Tutte le tariffe sono state aggiornate con successo!");
             } catch (NumberFormatException e) {
                 InterfacciaHelper.mostraErrore("Il costo orario deve essere un numero valido.");

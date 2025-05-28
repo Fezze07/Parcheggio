@@ -18,7 +18,7 @@ public class GestioneParcheggio {
         SalvaCarica.esportaParcheggio(posto);
     }
 
-    public static void cancellaUtente(Utente utente) {
+    public static void cancellaPrenotazioneUtente(Utente utente) {
         FunzioniAdmin.eliminaPrenotazioneUtente(utente, conn);
     }
 
@@ -27,7 +27,7 @@ public class GestioneParcheggio {
     }
 
     public static void caricaOrari() {
-        SalvaCarica.caricaOrari();
+        SalvaCarica.caricaOrariDaDatabase();
     }
 
     public static void caricaPrezzi() {

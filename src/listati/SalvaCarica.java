@@ -2,9 +2,8 @@ package listati;
 
 import java.io.*;
 import java.net.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
@@ -100,101 +99,157 @@ public class SalvaCarica {
         }
     }
 
-    public static void salvaPrezzi() {
-        try {
-            String pathFile = GestoreDatabase.getPathDatabase("tariffe.txt");
-            File file = new File(pathFile);
-            try (FileWriter writer = new FileWriter(file)) {
-                StringBuilder sb = new StringBuilder();
-                sb.append(Prezzi.costoOrario).append("\n");
-                Prezzi.prezziBaseVeicoli.forEach((k, v) -> sb.append("VEICOLO;").append(k).append(";").append(v).append("\n"));
-                Prezzi.prezziOpzioni.forEach((k, v) -> sb.append("OPZIONE;").append(k).append(";").append(v).append("\n"));
-                Prezzi.prezziGiorni.forEach((k, v) -> sb.append("GIORNO;").append(k).append(";").append(v).append("\n"));
-                writer.write(sb.toString());
+    public static void esportaPrezzi() {
+        try (Connection conn = Connessione_SQL.creaConnessione()) {
+            conn.setAutoCommit(false);
+            //Costo base
+            String updateBase = "UPDATE tariffe_base SET costo_quindici_minuti = ? WHERE id = 1";
+            try (PreparedStatement stmt = conn.prepareStatement(updateBase)) {
+                stmt.setDouble(1, Prezzi.costoOrario);
+                stmt.executeUpdate();
             }
-        } catch (IOException | URISyntaxException e) {
-            System.err.println("Errore nell'esportazione delle tariffe:\n" + e.getMessage());
+            //Tariffe veicoli
+            try (Statement stmt = conn.createStatement()) {
+                stmt.executeUpdate("DELETE FROM tariffe_veicoli");
+            }
+            String insertVeicolo = "INSERT INTO tariffe_veicoli (tipo_veicolo, costo) VALUES (?, ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(insertVeicolo)) {
+                for (var entry : Prezzi.prezziBaseVeicoli.entrySet()) {
+                    stmt.setString(1, entry.getKey());
+                    stmt.setInt(2, entry.getValue());
+                    stmt.addBatch();
+                }
+                stmt.executeBatch();
+            }
+            //Tariffe opzioni
+            try (Statement stmt = conn.createStatement()) {
+                stmt.executeUpdate("DELETE FROM tariffe_opzioni");
+            }
+            String insertOpzione = "INSERT INTO tariffe_opzioni (id, costo) VALUES (?, ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(insertOpzione)) {
+                for (var entry : Prezzi.prezziOpzioni.entrySet()) {
+                    stmt.setInt(1, entry.getKey());
+                    stmt.setInt(2, entry.getValue());
+                    stmt.addBatch();
+                }
+                stmt.executeBatch();
+            }
+            //Tariffe giornaliere
+            try (Statement stmt = conn.createStatement()) {
+                stmt.executeUpdate("DELETE FROM tariffe_giornaliere");
+            }
+            String insertGiorno = "INSERT INTO tariffe_giornaliere (giorno_settimana, incremento) VALUES (?, ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(insertGiorno)) {
+                for (var entry : Prezzi.prezziGiorni.entrySet()) {
+                    stmt.setString(1, entry.getKey().name());
+                    stmt.setInt(2, entry.getValue());
+                    stmt.addBatch();
+                }
+                stmt.executeBatch();
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            System.err.println("Errore nell'esportazione delle tariffe al database:\n" + e.getMessage());
         }
     }
 
     public static void caricaPrezzi() {
-        try {
-            String pathFile = GestoreDatabase.getPathDatabase("tariffe.txt");
-            File file = new File(pathFile);
-            if (!file.exists()) return;
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                Prezzi.costoOrario = Double.parseDouble(reader.readLine());
-                Prezzi.prezziBaseVeicoli.clear();
-                Prezzi.prezziOpzioni.clear();
-                Prezzi.prezziGiorni.clear();
-                String riga;
-                while ((riga = reader.readLine()) != null) {
-                    String[] campi = riga.split(";");
-                    if (campi.length != 3) continue;
-                    String tipo = campi[0];
-                    String chiave = campi[1];
-                    int valore = Integer.parseInt(campi[2]);
-                    switch (tipo) {
-                        case "VEICOLO" -> Prezzi.prezziBaseVeicoli.put(chiave, valore);
-                        case "OPZIONE" -> Prezzi.prezziOpzioni.put(Integer.parseInt(chiave), valore);
-                        case "GIORNO" -> Prezzi.prezziGiorni.put(DayOfWeek.valueOf(chiave), valore);
-                    }
+        try (Connection conn = Connessione_SQL.creaConnessione()) {
+            //Tariffa base
+            String queryBase = "SELECT costo_quindici_minuti FROM tariffe_base WHERE id = 1";
+            try (PreparedStatement stmt = conn.prepareStatement(queryBase);
+                 ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Prezzi.costoOrario = rs.getDouble("costo_quindici_minuti");
                 }
             }
-        } catch (IOException | URISyntaxException | NumberFormatException e) {
-            System.err.println("Errore nel caricamento tariffe:\n" + e.getMessage());
+            //Tariffe veicoli
+            Prezzi.prezziBaseVeicoli.clear();
+            String queryVeicoli = "SELECT tipo_veicolo, costo FROM tariffe_veicoli";
+            try (PreparedStatement stmt = conn.prepareStatement(queryVeicoli);
+                 ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String tipo = rs.getString("tipo_veicolo");
+                    int costo = rs.getInt("costo");
+                    Prezzi.prezziBaseVeicoli.put(tipo, costo);
+                }
+            }
+            //Tariffe opzioni
+            Prezzi.prezziOpzioni.clear();
+            String queryOpzioni = "SELECT id, costo FROM tariffe_opzioni";
+            try (PreparedStatement stmt = conn.prepareStatement(queryOpzioni);
+                 ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    int costo = rs.getInt("costo");
+                    Prezzi.prezziOpzioni.put(id, costo);
+                }
+            }
+            //Tariffe giornaliere
+            Prezzi.prezziGiorni.clear();
+            String queryGiorni = "SELECT giorno_settimana, incremento FROM tariffe_giornaliere";
+            try (PreparedStatement stmt = conn.prepareStatement(queryGiorni);
+                 ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    DayOfWeek giorno = DayOfWeek.valueOf(rs.getString("giorno_settimana").toUpperCase());
+                    int costo = rs.getInt("incremento");
+                    Prezzi.prezziGiorni.put(giorno, costo);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Errore nel caricamento tariffe dal database:\n" + e.getMessage());
         }
     }
 
-    public static void salvaOrari(Double apertura, Double chiusura, Set<LocalDate> giorniChiusura) {
-        try {
-            String pathFile = GestoreDatabase.getPathDatabase("orari.txt");
-            File file = new File(pathFile);
-            try (FileWriter scrivi = new FileWriter(file)) {
-                scrivi.write(apertura +"\n");
-                scrivi.write(chiusura +"\n");
-                if(giorniChiusura!=null && !giorniChiusura.isEmpty()) {
-                    StringBuilder sb = new StringBuilder();
-                    for (LocalDate d : giorniChiusura) {
-                        sb.append(d.toString()).append(",");
-                    }
-                    sb.deleteCharAt(sb.length() - 1);
-                    scrivi.write(sb.toString());
-                } else {
-                    scrivi.write("null");
+    public static void esportaOrari(Double apertura, Double chiusura, Set<LocalDate> giorniChiusura) {
+        //Invia al Server APERTURA/CHIUSURA
+        try (Connection conn = Connessione_SQL.creaConnessione()) {
+            String query = "INSERT INTO orari (apertura, chiusura) VALUES (?, ?) " +
+                    "ON DUPLICATE KEY UPDATE apertura = VALUES(apertura), chiusura = VALUES(chiusura)";
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, apertura.toString());
+                stmt.setString(2, chiusura.toString());
+                stmt.executeUpdate();
+            }
+            //Invia al Server GIORNI-CHIUSURA
+            String query2 = "INSERT INTO giorni_festivi (data) VALUES (?) " +
+                    "ON DUPLICATE KEY UPDATE data = VALUES(data)";
+            try (PreparedStatement stmt = conn.prepareStatement(query2)) {
+                for (LocalDate giorno : giorniChiusura) {
+                    stmt.setDate(1, Date.valueOf(giorno));
+                    stmt.executeUpdate();
                 }
             }
-        } catch (IOException | URISyntaxException e) {
-            System.err.println("Errore nell'esportazione degli orari:\n" + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Errore nella connessione al database:\n" + e.getMessage());
         }
     }
 
-    public static void caricaOrari() {
-        try {
-            String pathFile = GestoreDatabase.getPathDatabase("orari.txt");
-            File file = new File(pathFile);
-            if (!file.exists()) return;
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                String aperturaString = reader.readLine();
-                String chiusuraString = reader.readLine();
-                String giorniChiusuraString = reader.readLine();
-                if (aperturaString == null || chiusuraString == null) return;
-                Double apertura = Double.parseDouble(aperturaString);
-                Double chiusura = Double.parseDouble(chiusuraString);
-                InterfacciaHelper.setOrariParcheggi(apertura,chiusura);
-                if (giorniChiusuraString != null && !giorniChiusuraString.equals("null")) {
-                    Set<LocalDate> giorniChiusura = new HashSet<>();
-                    String[] parts = giorniChiusuraString.split(",");
-                    for (String part : parts) {
-                        giorniChiusura.add(LocalDate.parse(part.trim()));
-                    }
-                    InterfacciaHelper.setGiorniChiusura(giorniChiusura);
-                } else {
-                    InterfacciaHelper.setGiorniChiusura(null);
+    public static void caricaOrariDaDatabase() {
+        try (Connection conn = Connessione_SQL.creaConnessione()) {
+            String query = "SELECT apertura, chiusura FROM orari WHERE id = 1";
+            try (PreparedStatement stmt = conn.prepareStatement(query);
+                 ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    double apertura = rs.getDouble("apertura");
+                    double chiusura = rs.getDouble("chiusura");
+                    InterfacciaHelper.setOrariParcheggi(apertura, chiusura);
                 }
             }
-        } catch (IOException | URISyntaxException | NumberFormatException e) {
-            System.err.println("Errore nel caricamento degli orari:\n" + e.getMessage());
+            String query2 = "SELECT data FROM giorni_festivi";
+            Set<LocalDate> giorniChiusura = new HashSet<>();
+            try (PreparedStatement stmt = conn.prepareStatement(query2);
+                 ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    LocalDate data = rs.getDate("data").toLocalDate();
+                    giorniChiusura.add(data);
+                }
+            }
+            if (giorniChiusura.isEmpty()) giorniChiusura = null;
+            InterfacciaHelper.setGiorniChiusura(giorniChiusura);
+        } catch (SQLException e) {
+            System.err.println("Errore nel caricamento degli orari dal database:\n" + e.getMessage());
         }
     }
 }

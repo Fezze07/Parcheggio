@@ -143,7 +143,7 @@ public class SchermataIniziale {
             } else {
                 switch (azione) {
                     case "prenotazione" -> GUI_Prenotazione.mostraFinestraPrenotazione(utenteLoggato, null);
-                    case "disdici" -> GestioneParcheggio.cancellaUtente(utenteLoggato);
+                    case "disdici" -> GestioneParcheggio.cancellaPrenotazioneUtente(utenteLoggato);
                     case "cambiaPassword" -> GUI_GestioneUtenti.cambiaPassword(utenteLoggato);
                     case "cambiaNome" -> GUI_GestioneUtenti.cambiaNomeUtente(utenteLoggato);
                 }

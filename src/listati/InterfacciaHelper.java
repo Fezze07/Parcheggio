@@ -40,13 +40,13 @@ public class InterfacciaHelper {
     public static void setOrariParcheggi(Double apertura, Double chiusura) {
         if (apertura != null) ORARIO_APERTURA = apertura;
         if (chiusura != null) ORARIO_CHIUSURA = chiusura;
-        SalvaCarica.salvaOrari(ORARIO_APERTURA, ORARIO_CHIUSURA, GIORNI_CHIUSURA);
+        SalvaCarica.esportaOrari(ORARIO_APERTURA, ORARIO_CHIUSURA, GIORNI_CHIUSURA);
     }
 
     public static void setGiorniChiusura(Set<LocalDate> giorniChiusura) {
         if (giorniChiusura != null && !giorniChiusura.isEmpty()) GIORNI_CHIUSURA = giorniChiusura;
-        else GIORNI_CHIUSURA = null;
-        SalvaCarica.salvaOrari(ORARIO_APERTURA, ORARIO_CHIUSURA, GIORNI_CHIUSURA);
+        else GIORNI_CHIUSURA = new HashSet<>();
+        SalvaCarica.esportaOrari(ORARIO_APERTURA, ORARIO_CHIUSURA, GIORNI_CHIUSURA);
     }
 
     public static TextField creaCampoTesto(String testo) {

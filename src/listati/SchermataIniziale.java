@@ -116,8 +116,7 @@ public class SchermataIniziale {
                 Button pulsVerificaDisponibilita = InterfacciaHelper.creaPulsante("Verifica disponibilità", _ -> GestioneParcheggio.visualizzaParcheggio(utente));
                 Button pulsDisdirePrenotazione = creaPulsanteProtetto("Disdici prenotazione", "disdici");
                 Button pulsCambiaPassword = creaPulsanteProtetto("Cambia Password", "cambiaPassword");
-                Button pulsCambiaNomeUtente = creaPulsanteProtetto("Cambia Nome Utente", "cambiaNome");
-                menu.getChildren().addAll(pulsPrenotaPosto, pulsVerificaDisponibilita, pulsDisdirePrenotazione, pulsCambiaPassword, pulsCambiaNomeUtente);
+                menu.getChildren().addAll(pulsPrenotaPosto, pulsVerificaDisponibilita, pulsDisdirePrenotazione, pulsCambiaPassword);
             } else {
                 Button pulsSimulaPrenotazione = InterfacciaHelper.creaPulsante("Simula prenotazione", _ -> GUI_Prenotazione.mostraFinestraPrenotazione(utente, null));
                 Button pulsCancellaUtenti = InterfacciaHelper.creaPulsante("Cancella utente", _ -> GestioneUtenti.cancellaUtenteAdmin(utente));
@@ -146,7 +145,6 @@ public class SchermataIniziale {
                     case "prenotazione" -> GUI_Prenotazione.mostraFinestraPrenotazione(utenteLoggato, null);
                     case "disdici" -> GestioneParcheggio.cancellaPrenotazioneUtente(utenteLoggato);
                     case "cambiaPassword" -> GUI_GestioneUtenti.cambiaPassword(utenteLoggato);
-                    case "cambiaNome" -> GUI_GestioneUtenti.cambiaNomeUtente(utenteLoggato);
                 }
             }
         });

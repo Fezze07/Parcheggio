@@ -31,6 +31,7 @@ public class GUI_GestioneUtenti {
             String password = campoPassword.getText();
             if (gestioneUtenti.verificaCredenziali(nome, password)) {
                 Utente u = gestioneUtenti.ritornaUtente(nome);
+                SalvaCarica.esportaUtenti(u);
                 callback.accept(u);
             }
         });
@@ -94,29 +95,6 @@ public class GUI_GestioneUtenti {
         });
         Button esci = InterfacciaHelper.creaPulsante("Esci", _ -> SchermataIniziale.aggiornaMenu(utente));
         VBox layout = new VBox(10, labelPassword, campoPassword, salva[0], esci);
-        layout.setAlignment(Pos.CENTER);
-        layout.setPadding(new Insets(50));
-        base.setCenter(layout);
-    }
-
-    public static void cambiaNomeUtente(Utente utente) {
-        Label labelNome = InterfacciaHelper.creaLabel("Nuovo nome utente");
-        TextField campoNome = InterfacciaHelper.creaCampoTesto("");
-
-        final Button[] salva = new Button[1];
-        salva[0] = InterfacciaHelper.creaPulsante("Salva Nuovo Nome", _ -> {
-            String nuovoNome = campoNome.getText().trim();
-            if (nuovoNome.isEmpty()) {
-                InterfacciaHelper.mostraErrore("Il nome utente non può essere vuoto!");
-            } else if (gestioneUtenti.verificaDisponibilitaNome(nuovoNome)) {
-                InterfacciaHelper.mostraErrore("Nome utente già in uso!");
-            } else {
-                gestioneUtenti.cambiaNomeUtente(utente, nuovoNome);
-                InterfacciaHelper.mostraConfermaRunnable("Nome utente cambiato con successo!", () -> SchermataIniziale.aggiornaMenu(utente));
-            }
-        });
-        Button esci = InterfacciaHelper.creaPulsante("Esci", _ -> SchermataIniziale.aggiornaMenu(utente));
-        VBox layout = new VBox(10, labelNome, campoNome, salva[0], esci);
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(50));
         base.setCenter(layout);

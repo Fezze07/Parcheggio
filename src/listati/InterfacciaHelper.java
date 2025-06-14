@@ -303,4 +303,8 @@ public class InterfacciaHelper {
         return new Image(percorso);
     }
 
+    public static String oscuraPassword(String password) {
+        if (password.length() <= 2) return "*".repeat(password.length());
+        return password.charAt(0) + "*".repeat(password.length() - 2) + password.charAt(password.length() - 1);
+    }
 }

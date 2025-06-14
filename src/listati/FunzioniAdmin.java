@@ -7,7 +7,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -194,10 +193,12 @@ public class FunzioniAdmin {
     }
 
     public static void cancellaUtente(Utente admin, Connection conn) {
-        ComboBox<Utente> scelta = new ComboBox<>();
+        ComboBox<String> scelta = new ComboBox<>();
         scelta.setPromptText("Seleziona un utente da eliminare");
         scelta.getStyleClass().add("combo-selezione");
 
+        Map<String, String> nomeToPassword = new HashMap<>();
+        Map<String, String> nomeToTipo = new HashMap<>();
         String query = "SELECT nome_utente, password, tipo FROM utenti WHERE tipo != 'Admin'";
         try (PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
@@ -205,29 +206,26 @@ public class FunzioniAdmin {
                 String nome = rs.getString("nome_utente");
                 String password = rs.getString("password");
                 String tipo = rs.getString("tipo");
-                Utente utente = new Utente(nome, password, tipo);
-                scelta.getItems().add(utente);
+                String passwordOscurata = InterfacciaHelper.oscuraPassword(password);
+                String visuale = "👤 " + nome + " | 🔒 " + passwordOscurata + " | 🧩 " + tipo;
+                scelta.getItems().add(visuale);
+                nomeToPassword.put(nome, password);
+                nomeToTipo.put(nome, tipo);
             }
         } catch (SQLException e) {
             System.err.println("Errore caricamento utenti: " + e.getMessage());
             return;
         }
 
-        scelta.setCellFactory(_ -> new ListCell<>() {
-            @Override
-            protected void updateItem(Utente u, boolean vuoto) {
-                super.updateItem(u, vuoto);
-                if (vuoto || u == null) setText(null);
-                else setText("👤 " + u.nomeUtente + " | 🔒 " + u.password);
-            }
-        });
-        scelta.setButtonCell(scelta.getCellFactory().call(null));
         Button esci = InterfacciaHelper.creaPulsante("Esci", _ -> SchermataIniziale.aggiornaMenu(admin));
         Button conferma = InterfacciaHelper.creaPulsante("Conferma Eliminazione", _ -> {
-            Utente selezionato = scelta.getValue();
+            String selezionato = scelta.getValue();
             if (selezionato != null) {
-                GestioneUtenti.cancellaUtente(selezionato);
-                InterfacciaHelper.mostraConferma("Utente eliminato con successo.");
+                String nome = selezionato.split(" \\| ")[0].replace("👤 ", "");
+                String password = nomeToPassword.get(nome);
+                String tipo = nomeToTipo.get(nome);
+                Utente u = new Utente(tipo, nome, password);
+                GestioneUtenti.cancellaUtente(u);
             } else {
                 InterfacciaHelper.mostraErrore("Seleziona un utente prima.");
             }

@@ -27,9 +27,15 @@ public class GestioneUtenti {
     public static void cancellaUtente(Utente utente) {
         String query = "DELETE FROM utenti WHERE nome_utente = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            System.out.println("Query: " + query);
+            System.out.println("Parametro: " + utente.getNomeUtente());
             stmt.setString(1, utente.getNomeUtente());
             int righe = stmt.executeUpdate();
-            if (righe == 0) InterfacciaHelper.mostraErrore("Utente non trovato");
+            if (righe == 0) {
+                InterfacciaHelper.mostraErrore("Utente non trovato");
+            } else {
+                InterfacciaHelper.mostraConferma("Utente eliminato con successo!");
+            }
         } catch (SQLException e) {
             System.err.println("Errore cancellazione utente: " + e.getMessage());
         }
@@ -88,19 +94,6 @@ public class GestioneUtenti {
             else System.err.println("Utente non trovato per cambio password");
         } catch (SQLException e) {
             System.err.println("Errore cambio password: " + e.getMessage());
-        }
-    }
-
-    public void cambiaNomeUtente(Utente utente, String nuovoNome) {
-        String query = "UPDATE utenti SET nome_utente = ? WHERE nome_utente = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, nuovoNome);
-            stmt.setString(2, utente.getNomeUtente());
-            int righe = stmt.executeUpdate();
-            if (righe > 0) utente.setNomeUtente(nuovoNome);
-            else System.err.println("Utente non trovato per cambio nome");
-        } catch (SQLException e) {
-            System.err.println("Errore cambio nome utente: " + e.getMessage());
         }
     }
 

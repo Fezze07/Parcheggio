@@ -30,7 +30,9 @@ public class Utente {
         return tipo;
     }
 
+    @Override
     public String toString() {
-        return tipo + "=  " +nomeUtente+ " Password = " +password;
+        return "👤 " + nomeUtente + " | 🔒 " + InterfacciaHelper.oscuraPassword(password) + " | 🧩 " + tipo;
     }
+
 }
